@@ -49,6 +49,8 @@ def handler(event, context):
         address = message_in["text"].encode('utf-8').decode('utf-8')
         echo_text = get_echo_text(address)
     elif 'voice' in message_in:
+        if YS_API_KEY is None:
+            return FUNC_RESPONSE
         # ищем путь аудио файла
         r_file = requests.get(url=f'{TELEGRAM_API_URL}/getFile', params={'file_id': message_in['voice']['file_id']})
         file_path = r_file.json()['result']['file_path']
